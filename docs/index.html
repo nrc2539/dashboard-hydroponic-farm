@@ -78,7 +78,7 @@
           light_text.innerHTML = data.light_level; 
         });
 
-        var five_latest_val = firebase.database().ref().child("data").limitToLast(15);
+        var five_latest_val = firebase.database().ref().child("data").limitToLast(30);
         five_latest_val.on('child_added', function(snapshot){
           var data_val = snapshot.val();
           console.log(data_val.time+" around temp is "+data_val.around_temp);
