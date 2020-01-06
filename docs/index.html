@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -24,7 +24,7 @@
       <div class="row text-center align-middle">
         <div class="col px-2 m-1 bg-info text-white rounded-sm">
           วันที่
-          <div id="date">d-m-yyyy</div>
+          <div id="date">dd-mm-yyyy</div>
         </div>
         <div class="col px-2 m-1 bg-secondary text-white rounded-sm">
           เวลา
@@ -46,19 +46,19 @@
     </div>
   
     <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyBskM8g4H3MSWisiV3W23P_4y-DZXW24-Y",
-        authDomain: "hydroponic-farm-d66cb.firebaseapp.com",
-        databaseURL: "https://hydroponic-farm-d66cb.firebaseio.com",
-        projectId: "hydroponic-farm-d66cb",
-        storageBucket: "",
-        messagingSenderId: "248497416572",
-        appId: "1:248497416572:web:c7ff1cc9ac61bb84"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
+			// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: "AIzaSyB7YWv0ibz6nZxgJt9K4TNb9iVM3ZtkLxc",
+				authDomain: "monitoringfarm2020-b98bd.firebaseapp.com",
+				databaseURL: "https://monitoringfarm2020-b98bd.firebaseio.com",
+				projectId: "monitoringfarm2020-b98bd",
+				storageBucket: "monitoringfarm2020-b98bd.appspot.com",
+				messagingSenderId: "35205209194",
+				appId: "1:35205209194:web:6fa08b24d315ac0e27be13"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+		</script>
     <script>
       try{
         var date_text = document.getElementById("date");
@@ -66,25 +66,26 @@
         var water_temp_text = document.getElementById("water_temp");
         var around_temp_text = document.getElementById("around_temp");
         var light_text = document.getElementById("light");
+				var options_date = {year: "numeric", month: "2-digit", day: "2-digit"}
         
         //read data from firebase and show on web page
-        var reference = firebase.database().ref().child("data").limitToLast(1);
+        var reference = firebase.database().ref().child("log_data").limitToLast(1);
         reference.on('child_added',function(snapshot2){
           var data = snapshot2.val();
-          date_text.innerHTML = data.date;
+          date_text.innerHTML = new Date(data.date).toLocaleDateString('th-TH', options_date);
           time_text.innerHTML = data.time;		
-          water_temp_text.innerHTML = data.temperature;
-          around_temp_text.innerHTML = data.around_temp;
+          water_temp_text.innerHTML = data.water_temperature;
+          around_temp_text.innerHTML = data.temperature;
           light_text.innerHTML = data.light_level; 
         });
 
-        var five_latest_val = firebase.database().ref().child("data").limitToLast(30);
+        var five_latest_val = firebase.database().ref().child("log_data").limitToLast(30);
         five_latest_val.on('child_added', function(snapshot){
           var data_val = snapshot.val();
-          console.log(data_val.time+" around temp is "+data_val.around_temp);
+          console.log(data_val.time+" around temp is "+data_val.temperature);
         });
       }catch(err){
-         console.log(err.message);
+				console.log(err.message);
       }
     </script>
   </body>
